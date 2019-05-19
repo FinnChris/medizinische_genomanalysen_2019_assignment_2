@@ -2,13 +2,17 @@
 
 import vcf
 
-__author__ = 'XXX'
+__author__ = 'Christian Jansen'
 
 
 class Assignment2:
     
-    def __init__(self):
+    def __init__(self, path):
         ## Check if pyvcf is installed
+        if vcf.VERSION == None:
+            exit("pyvcf not installed")
+        self.vcf_path = path
+        self.vcf_Record = vcf.Reader(filename=self.vcf_path)
         print("PyVCF version: %s" % vcf.VERSION)
         
 
@@ -16,8 +20,14 @@ class Assignment2:
         '''
         Get the average PHRED quality of all variants
         :return:
-        '''    
-        print("TODO")
+        '''
+        quality_sum = 0
+        count = 0
+        for item in self.vcf_Record:
+            quality_sum += item.QUAL
+            count += 1
+        quality_avg = quality_sum/count
+        return quality_avg
         
         
     def get_total_number_of_variants_of_file(self):
@@ -78,12 +88,13 @@ class Assignment2:
         
     
     def print_summary(self):
+        print("Average quality of the file ", self.vcf_path, ": ", self.get_average_quality_of_file())
         print("Print all results here")
     
     
 def main():
     print("Assignment 2")
-    assignment2 = Assignment2()
+    assignment2 = Assignment2("chr21_new.vcf")
     assignment2.print_summary()
     print("Done with assignment 2")
         
