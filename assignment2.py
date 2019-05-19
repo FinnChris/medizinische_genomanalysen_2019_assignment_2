@@ -12,7 +12,6 @@ class Assignment2:
         if vcf.VERSION == None:
             exit("pyvcf not installed")
         self.vcf_path = path
-        self.vcf_Record = vcf.Reader(filename=self.vcf_path)
         print("PyVCF version: %s" % vcf.VERSION)
         
 
@@ -23,7 +22,7 @@ class Assignment2:
         '''
         quality_sum = 0
         count = 0
-        for item in self.vcf_Record:
+        for item in vcf.Reader(filename=self.vcf_path):
             quality_sum += item.QUAL
             count += 1
         quality_avg = quality_sum/count
@@ -35,7 +34,12 @@ class Assignment2:
         Get the total number of variants
         :return: total number of variants
         '''
-        print("TODO")
+        count = 0
+        for item in vcf.Reader(filename=self.vcf_path):
+            count += 1
+
+        return count
+
     
     
     def get_variant_caller_of_vcf(self):
@@ -43,6 +47,7 @@ class Assignment2:
         Return the variant caller name
         :return: 
         '''
+        caller = vcf.Reader(filename=self.vcf_path).
         print("TODO")
         
         
@@ -52,8 +57,7 @@ class Assignment2:
         :return: 
         '''
         print("TODO")
-        
-        
+
     def get_number_of_indels(self):
         '''
         Return the number of identified INDELs
@@ -89,6 +93,7 @@ class Assignment2:
     
     def print_summary(self):
         print("Average quality of the file ", self.vcf_path, ": ", self.get_average_quality_of_file())
+        print("Total number of variations: ", self.get_total_number_of_variants_of_file())
         print("Print all results here")
     
     
