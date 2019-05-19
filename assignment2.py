@@ -59,7 +59,14 @@ class Assignment2:
         Return the genome reference version
         :return: 
         '''
-        print("TODO")
+        ref = set([])
+
+        for item in vcf.Reader(filename=self.vcf_path):
+            if 'difficultregion' in item.INFO.keys():
+                for model in item.INFO['difficultregion']:
+                    ref.add(model)
+
+        return ref
 
     def get_number_of_indels(self):
         '''
@@ -95,9 +102,14 @@ class Assignment2:
         
     
     def print_summary(self):
+        #print("DEVELOPMENT: ", self.get_human_reference_version())
         print("Average quality of the file ", self.vcf_path, ": ", self.get_average_quality_of_file())
         print("Total number of variations: ", self.get_total_number_of_variants_of_file())
         print("Variant callers used: ", self.get_variant_caller_of_vcf())
+        print("Reference version: ", self.get_human_reference_version())
+        print("Anmerkung: Es war mir nicht möglich die reference version hg38 im file zu finden außer in den difficult regions, daher habe ich diese hier ausgegeben.")
+
+
         print("Print all results here")
     
     
