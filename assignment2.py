@@ -73,7 +73,11 @@ class Assignment2:
         Return the number of identified INDELs
         :return:
         '''
-        print("TODO")
+        indels = 0
+        for item in vcf.Reader(filename=self.vcf_path):
+            if item.is_indel:
+                indels += 1
+        return indels
         
 
     def get_number_of_snvs(self):
@@ -81,16 +85,23 @@ class Assignment2:
         Return the number of SNVs
         :return: 
         '''
-        print("TODO")
+        snv = 0
+        for item in vcf.Reader(filename=self.vcf_path):
+            if item.is_snp:
+                snv += 1
+        return snv
         
     def get_number_of_heterozygous_variants(self):
         '''
         Return the number of heterozygous variants
         :return: 
         '''
-        print("TODO")
-        
-    
+        heterozy = 0
+        for item in vcf.Reader(filename=self.vcf_path):
+            if item.num_het:
+                heterozy += 1
+        return heterozy
+
     def merge_chrs_into_one_vcf(self):
         '''
         Creates one VCF containing all variants of chr21 and chr22
@@ -108,6 +119,9 @@ class Assignment2:
         print("Variant callers used: ", self.get_variant_caller_of_vcf())
         print("Reference version: ", self.get_human_reference_version())
         print("Anmerkung: Es war mir nicht möglich die reference version hg38 im file zu finden außer in den difficult regions, daher habe ich diese hier ausgegeben.")
+        print("Number of indels: ", self.get_number_of_indels())
+        print("Number of SNVs: ", self.get_number_of_snvs())
+        print("Number of heterozygous variants:", self.get_number_of_heterozygous_variants())
 
 
         print("Print all results here")
