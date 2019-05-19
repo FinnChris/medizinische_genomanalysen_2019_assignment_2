@@ -102,15 +102,7 @@ class Assignment2:
                 heterozy += 1
         return heterozy
 
-    def merge_chrs_into_one_vcf(self):
-        '''
-        Creates one VCF containing all variants of chr21 and chr22
-        :return:
-        '''
-        print("TODO")
-        
-        print("Number of total variants")
-        
+
     
     def print_summary(self):
         #print("DEVELOPMENT: ", self.get_human_reference_version())
@@ -125,12 +117,42 @@ class Assignment2:
 
 
         print("Print all results here")
-    
-    
+
+def merge_chrs_into_one_vcf(file1, file2):
+    file_1 = open(file1, "r")
+    file_2 = open(file2, "r")
+    output = open("merged.vcf", "a")
+
+    for line in file_1.readlines():
+        output.write(line)
+    for line in file_2.readlines():
+        if line[0] != "#":
+            output.write(line)
+    file_2.close()
+    file_1.close()
+    output.close()
+    #'''
+    #Creates one VCF containing all variants of chr21 and chr22
+    #:return:
+    #'''
+
+
+
+
 def main():
     print("Assignment 2")
-    assignment2 = Assignment2("chr21_new.vcf")
-    assignment2.print_summary()
+    assignment2_21 = Assignment2("chr21_new.vcf")
+    print("Summary of: chr21_new.vcf")
+    assignment2_21.print_summary()
+    print(" ")
+    print(" ")
+    print("Summary of: chr22_new.vcf")
+    assignment2_22 = Assignment2("chr22_new.vcf")
+    assignment2_22.print_summary()
+
+    print("merging files:")
+    merge_chrs_into_one_vcf("chr21_new.vcf", "chr22_new.vcf")
+
     print("Done with assignment 2")
         
         
